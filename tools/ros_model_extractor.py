@@ -108,10 +108,11 @@ class RosExtractor():
             if node.language == "cpp":
                 parser = CppAstParser(workspace = ws)
                 analysis = RoscppExtractor(pkg, ws)
+                node.source_tree = parser.global_scope
             if node.language == "py":
                 parser = PyAstParser(workspace = ws)
                 analysis = RospyExtractor(pkg, ws)
-            node.source_tree = parser.global_scope
+
             for sf in node.source_files:
                 if parser.parse(sf.path) is not None:
                     # ROS MODEL EXTRACT PRIMITIVES
