@@ -5,4 +5,5 @@ ComponentInterface { name joystick_teleop_node
 	RosSubscribers{
 		RosSubscriber "joy" { RefSubscriber "teleop.joystick_teleop_node.joystick_teleop_node.joy"}
 	}
+	
 }

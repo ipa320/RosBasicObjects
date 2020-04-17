@@ -42,7 +42,8 @@ PackageSet{package{
       TopicSpec SingleJointPositionGoal{ message { float64 position duration min_duration float64 max_velocity }},
       TopicSpec SingleJointPositionResult{ message {  }},
       ServiceSpec QueryCalibrationState{ request {  } response { bool is_calibrated } },
-      ServiceSpec QueryTrajectoryState{ request { time time } response { string[] name float64[] position float64[] velocity float64[] acceleration } }
+      ServiceSpec QueryTrajectoryState{ request { time time } response { string[] name float64[] position float64[] velocity float64[] acceleration } },
+      ActionSpec FollowJointTrajectory{ goal { FollowJointTrajectoryActionGoal action_goal} result {FollowJointTrajectoryActionResult action_result} feedback {FollowJointTrajectoryActionFeedback action_feedback}}
     }}
   }
 }
