@@ -1,4 +1,5 @@
 ComponentInterface { name joystick_teleop_node
+	FromRosNode "teleop.joystick_teleop_node.joystick_teleop_node"
 	RosPublishers{
 		RosPublisher "cmd_vel" { RefPublisher "teleop.joystick_teleop_node.joystick_teleop_node.cmd_vel"}
 	}
