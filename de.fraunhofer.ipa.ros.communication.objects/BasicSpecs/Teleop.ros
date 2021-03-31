@@ -1,8 +1,8 @@
-PackageSet { package {
-	CatkinPackage teleop { artifact {
+PackageSet { 
+	CatkinPackage teleop {
 		Artifact  joystick_teleop_node {
-			node Node { name joystick_teleop_node 
-				publisher { Publisher { name cmd_vel message "geometry_msgs.Twist" } } 
-				subscriber { Subscriber { name joy message "sensor_msgs.Joy" } }
+			 Node { name joystick_teleop_node 
+				Publishers { Publisher { name cmd_vel message "geometry_msgs.Twist" } } 
+				Subscribers { Subscriber { name joy message "sensor_msgs.Joy" } }
 			}
-		}}}}}
+}}}
