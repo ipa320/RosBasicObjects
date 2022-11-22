@@ -1,0 +1,10 @@
+teleop:
+  artifacts:
+    joystick_teleop_node:
+      node: joystick_teleop_node
+        publishers:
+          cmd_vel:
+            type: "geometry_msgs.Twist"
+        subscribers:
+          joy:
+            type:"sensor_msgs.Joy"

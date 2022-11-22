@@ -1,14 +1,48 @@
-PackageSet{
-    Package controller_manager_msgs{ Specs {
-      TopicSpec ControllerState{},
-      TopicSpec ControllerStatistics{},
-      TopicSpec ControllersStatistics{},
-      TopicSpec HardwareInterfaceResources{},
-      ServiceSpec ListControllerTypes{},
-      ServiceSpec ListControllers{},
-      ServiceSpec LoadController{},
-      ServiceSpec ReloadControllerLibraries{},
-      ServiceSpec SwitchController{},
-      ServiceSpec UnloadController{}
-    }}
-}
+controller_manager_msgs:
+  specs:
+     msg: ControllerState
+       message:
+         string name string state string type "controller_manager_msgs.HardwareInterfaceResources"[] claimed_resources
+     msg: ControllerStatistics
+       message:
+         string name string type time timestamp bool running duration max_time duration mean_time duration variance_time int32 num_control_loop_overruns time time_last_control_loop_overrun
+     msg: ControllersStatistics
+       message:
+         "std_msgs.Header" header "controller_manager_msgs.ControllerStatistics"[] controller
+     msg: HardwareInterfaceResources
+       message:
+         string hardware_interface string[] resources
+     srv: ListControllerTypes
+       request:
+
+       response:
+         string[] types string[] base_classes
+     srv: ListControllers
+       request:
+
+       response:
+         ControllerState[] controller
+     srv: LoadController
+       request:
+         string name
+
+       response:
+         bool ok
+     srv: ReloadControllerLibraries
+       request:
+         bool force_kill
+
+       response:
+         bool ok
+     srv: SwitchController
+       request:
+         string[] start_controllers string[] stop_controllers int32 strictness int32 BEST_EFFORT=1 int32 STRICT=2 bool start_asap float64 timeout
+
+       response:
+         bool ok
+     srv: UnloadController
+       request:
+         string name
+
+       response:
+         bool ok

@@ -1,8 +1,0 @@
-ComponentInterface { name scan_2d
-	FromRosNode "scan_2d.scan_2d.scan_2d"
-	RosPublishers{
-		RosPublisher "scan" { RefPublisher "scan_2d.scan_2d.scan_2d.scan"},
-		RosPublisher "diagnostics" { RefPublisher "scan_2d.scan_2d.scan_2d.diagnostics"}
-	}
-	
-}

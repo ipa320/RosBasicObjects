@@ -1,8 +1,0 @@
-ComponentInterface { name joy_node
-	FromRosNode "joy.joy_node.joy_node"
-	RosPublishers{
-		RosPublisher "joy" { RefPublisher "joy.joy_node.joy_node.joy"},
-		RosPublisher "diagnostics" { RefPublisher "joy.joy_node.joy_node.diagnostics"}
-	}
-	
-}

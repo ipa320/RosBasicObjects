@@ -1,0 +1,9 @@
+scan_2d:
+  artifacts:
+    scan_2d:
+      node: scan_2d
+         publishers:
+           scan:
+             type: "sensor_msgs.LaserScan" 
+           diagnostics:
+             type: "diagnostic_msgs.DiagnosticArray"

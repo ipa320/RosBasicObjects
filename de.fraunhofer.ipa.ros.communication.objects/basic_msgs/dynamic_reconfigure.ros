@@ -1,15 +1,38 @@
-PackageSet{
-    Package dynamic_reconfigure{ Specs {
-      TopicSpec BoolParameter{},
-      TopicSpec Config{},
-      TopicSpec ConfigDescription{},
-      TopicSpec DoubleParameter{},
-      TopicSpec Group{},
-      TopicSpec GroupState{},
-      TopicSpec IntParameter{},
-      TopicSpec ParamDescription{},
-      TopicSpec SensorLevels{},
-      TopicSpec StrParameter{},
-      ServiceSpec Reconfigure{}
-    }}
-}
+dynamic_reconfigure:
+  specs:
+     msg: BoolParameter
+       message:
+         string name bool value
+     msg: Config
+       message:
+         BoolParameter[] bools IntParameter[] ints StrParameter[] strs DoubleParameter[] doubles GroupState[] groups
+     msg: ConfigDescription
+       message:
+         Group[] groups Config max Config min Config dflt
+     msg: DoubleParameter
+       message:
+         string name float64 value
+     msg: Group
+       message:
+         string name string type ParamDescription[] parameters int32 parent int32 id
+     msg: GroupState
+       message:
+         string name bool state int32 id int32 parent
+     msg: IntParameter
+       message:
+         string name int32 value
+     msg: ParamDescription
+       message:
+         string name string type uint32 level string description string edit_method
+     msg: SensorLevels
+       message:
+         byte RECONFIGURE_CLOSE=3 byte RECONFIGURE_STOP=1 byte RECONFIGURE_RUNNING=0
+     msg: StrParameter
+       message:
+         string name string value
+     srv: Reconfigure
+       request:
+         Config config
+
+       response:
+         Config config
