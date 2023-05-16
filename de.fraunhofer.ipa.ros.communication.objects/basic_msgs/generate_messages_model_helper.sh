@@ -22,45 +22,41 @@ function parserToRosModel(){
 for p in $package_list
 do
     cout_pkg=$((cout_pkg-1))
-    messages_fullname=$(rosmsg package $p)
-    arr_msg=($messages_fullname)
-    cout_msg=${#arr_msg[@]}
-    services_fullname=$(rossrv package $p)
-    arr_srv=($services_fullname)
-    cout_srv=${#arr_srv[@]}
+    specs_fullname=$(ros2 interface package $p)
+    arr_specs=($specs_fullname)
+    cout_specs=${#arr_specs[@]}
 
     echo $p':'
     echo '  specs:'
 
-    for i in $messages_fullname
+    for i in $specs_fullname
     do
-        cout_msg=$((cout_msg-1))
-        message=${i/$p\//}
-        message_show=$(rosmsg show -r $i | sed '/^#/ d' | awk -F'#' '{print $1}')
-        message_show="$(echo $message_show | sed -e 's/\s=\s/=/g')"
-        final_desc=$(parserToRosModel "$message_show")
-        echo -n '     msg: '$message
-        echo $'\n''       message:'
-        echo '         '$final_desc
-    done
-
-    for i in $services_fullname
-    do
-        cout_srv=$((cout_srv-1))
-        service=${i/$p\//}
-        service_show=$(rossrv show -r $i | sed '/^#/ d' | awk -F'#' '{print $1}')
-        request="$(echo $service_show | sed 's/---.*//' | sed -e 's/\s=\s/=/g')"
-        response="$(echo $service_show | sed -e 's#.*---\(\)#\1#'| sed -e 's/\s=\s/=/g')"
-        final_request=$(parserToRosModel "$request")
-        final_response=$(parserToRosModel "$response")   
-        echo -n '     srv: '$service
-        echo $'\n''       request:'
-        if [ -n "$request" ];then
-          echo '         '$final_request
+        cout_specs=$((cout_specs-1))
+        if [[ "$i" == *"/msg"* ]]; then
+          message=${i/$p\/msg\//}
+          message_show=$(ros2 interface show $i | grep -v '	' )
+          message_show="$(echo $message_show | sed -e 's/\s=\s/=/g')"
+          final_desc=$(parserToRosModel "$message_show")
+          echo -n '     msg: '$message
+          echo $'\n''       message:'
+          echo '         '$final_desc
         fi
-        echo $'\n''       response:'
-        if [ -n "$response" ];then
-          echo '         '$final_response
+        if [[ "$i" == *"/srv"* ]]; then
+          service=${i/$p\/srv\//}
+          service_show=$(ros2 interface show $i | grep -v '	' )
+          request="$(echo $service_show | sed 's/---.*//' | sed -e 's/\s=\s/=/g')"
+          response="$(echo $service_show | sed -e 's#.*---\(\)#\1#'| sed -e 's/\s=\s/=/g')"
+          final_request=$(parserToRosModel "$request")
+          final_response=$(parserToRosModel "$response")   
+          echo -n '     srv: '$service
+          echo $'\n''       request:'
+          if [ -n "$request" ];then
+            echo '         '$final_request
+          fi
+          echo $'\n''       response:'
+          if [ -n "$response" ];then
+            echo '         '$final_response
+          fi
         fi
     done
 done
