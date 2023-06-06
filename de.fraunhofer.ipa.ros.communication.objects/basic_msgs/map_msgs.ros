@@ -1,46 +1,64 @@
 map_msgs:
-  specs:
-     msg: OccupancyGridUpdate
-       message:
-         "std_msgs.Header" header int32 x int32 y uint32 width uint32 height int8[] data
-     msg: PointCloud2Update
-       message:
-         uint32 ADD=0 uint32 DELETE=1 "std_msgs.Header" header uint32 type "sensor_msgs.PointCloud2" points
-     msg: ProjectedMap
-       message:
-         "nav_msgs.OccupancyGrid" map float64 min_z float64 max_z
-     msg: ProjectedMapInfo
-       message:
-         string frame_id float64 x float64 y float64 width float64 height float64 min_z float64 max_z
-     srv: GetMapROI
-       request:
-         float64 x float64 y float64 l_x float64 l_y
-
-       response:
-         "nav_msgs.OccupancyGrid" sub_map
-     srv: GetPointMap
-       request:
-
-       response:
-         "sensor_msgs.PointCloud2" map
-     srv: GetPointMapROI
-       request:
-         float64 x float64 y float64 z float64 r float64 l_x float64 l_y float64 l_z
-
-       response:
-         "sensor_msgs.PointCloud2" sub_map
-     srv: ProjectedMapsInfo
-       request:
-         "map_msgs.ProjectedMapInfo"[] projected_maps_info
-
-       response:
-     srv: SaveMap
-       request:
-         "std_msgs.String" filename
-
-       response:
-     srv: SetMapProjections
-       request:
-
-       response:
-         "map_msgs.ProjectedMapInfo"[] projected_maps_info
+  msgs:
+    ProjectedMap
+      message
+        'nav_msgs/msg/OccupancyGrid'[] map
+        float64 min_z
+        float64 max_z
+    PointCloud2Update
+      message
+        'std_msgs/msg/Header'[] header
+        uint32 type
+        'sensor_msgs/msg/PointCloud2'[] points
+    OccupancyGridUpdate
+      message
+        'std_msgs/msg/Header'[] header
+        int32 x
+        int32 y
+        uint32 width
+        uint32 height
+        int8[] data
+    ProjectedMapInfo
+      message
+        string frame_id
+        float64 x
+        float64 y
+        float64 width
+        float64 height
+        float64 min_z
+        float64 max_z
+    
+  srvs:
+    GetPointMapROI
+      request
+        float64 x
+        float64 y
+        float64 z
+      response
+        'sensor_msgs/msg/PointCloud2'[] sub_map
+    ProjectedMapsInfo
+      request
+        'map_msgs/msg/ProjectedMapInfo'[] projected_maps_info
+      response
+    GetPointMap
+      request
+      response
+        'sensor_msgs/msg/PointCloud2'[] map
+    SaveMap
+      request
+        'std_msgs/msg/String'[] filename
+      response
+    SetMapProjections
+      request
+      response
+        'map_msgs/msg/ProjectedMapInfo'[] projected_maps_info
+    GetMapROI
+      request
+        float64 x
+        float64 y
+        float64 l_x
+        float64 l_y
+      response
+        'nav_msgs/msg/OccupancyGrid'[] sub_map
+    
+  
