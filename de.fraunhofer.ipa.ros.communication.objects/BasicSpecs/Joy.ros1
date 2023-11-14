@@ -4,6 +4,6 @@ joy:
       node: joy_node
       publishers:
         joy:
-          type: "sensor_msgs/Joy"
+          type: "sensor_msgs/msg/Joy"
         diagnostics:
-        	type: "diagnostic_msgs/DiagnosticArray"
+        	type: "diagnostic_msgs/msg/DiagnosticArray"

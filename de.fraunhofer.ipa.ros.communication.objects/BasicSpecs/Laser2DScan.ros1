@@ -4,6 +4,6 @@ scan_2d:
       node: scan_2d
       publishers:
         scan:
-          type: "sensor_msgs/LaserScan" 
+          type: "sensor_msgs/msg/LaserScan" 
         diagnostics:
-          type: "diagnostic_msgs/DiagnosticArray"
+          type: "diagnostic_msgs/msg/DiagnosticArray"

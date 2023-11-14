@@ -4,7 +4,7 @@ teleop:
       node: joystick_teleop_node
       publishers:
         cmd_vel:
-          type: "geometry_msgs/Twist"
+          type: "geometry_msgs/msg/Twist"
       subscribers:
         joy:
-          type:"sensor_msgs/Joy"
+          type:"sensor_msgs/msg/Joy"

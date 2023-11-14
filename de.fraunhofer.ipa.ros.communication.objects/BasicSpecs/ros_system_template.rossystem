@@ -1,0 +1,19 @@
+my_awesome_system:
+  processes:
+    process1:
+      nodes: [ node1 , node2 ]
+      threads: 2
+  nodes:
+    node1:
+      from: "my_awesome_pkg.awesome_node" #From .ros2 file
+      interfaces:
+        - my_publisher: pub-> "awesome::awesome_pub" # From .ros2 file
+      parameters:
+        - my_param: "awesome::awesome_param"
+         value: "Label"
+    node2:
+      from: "my_awesome_pkg.awesome_node" #From .ros2 file
+      interfaces:
+        - my_subscriber: sub-> "awesome::awesome_sub"
+  connections:
+    -[my_publisher, my_subscriber] # From line 10 and 17
