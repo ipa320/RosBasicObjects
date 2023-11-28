@@ -59,6 +59,10 @@ control_msgs:
         float64 i_max
         float64 i_min
         float64 output
+    GripperCommand
+      message
+        float64 position
+        float64 max_effort
     JointJog
       message
         'std_msgs/msg/Header'[] header
@@ -78,13 +82,19 @@ control_msgs:
       message
         'std_msgs/msg/Header'[] header
         string[] joint_names
+        'trajectory_msgs/msg/JointTrajectoryPoint'[] reference
+        'trajectory_msgs/msg/JointTrajectoryPoint'[] feedback
+        'trajectory_msgs/msg/JointTrajectoryPoint'[] error
+        'trajectory_msgs/msg/JointTrajectoryPoint'[] output
         'trajectory_msgs/msg/JointTrajectoryPoint'[] desired
         'trajectory_msgs/msg/JointTrajectoryPoint'[] actual
-        'trajectory_msgs/msg/JointTrajectoryPoint'[] error
         string[] multi_dof_joint_names
+        'trajectory_msgs/msg/MultiDOFJointTrajectoryPoint'[] multi_dof_reference
+        'trajectory_msgs/msg/MultiDOFJointTrajectoryPoint'[] multi_dof_feedback
+        'trajectory_msgs/msg/MultiDOFJointTrajectoryPoint'[] multi_dof_error
+        'trajectory_msgs/msg/MultiDOFJointTrajectoryPoint'[] multi_dof_output
         'trajectory_msgs/msg/MultiDOFJointTrajectoryPoint'[] multi_dof_desired
         'trajectory_msgs/msg/MultiDOFJointTrajectoryPoint'[] multi_dof_actual
-        'trajectory_msgs/msg/MultiDOFJointTrajectoryPoint'[] multi_dof_error
     SteeringControllerStatus
       message
         'std_msgs/msg/Header'[] header
@@ -122,6 +132,19 @@ control_msgs:
         'trajectory_msgs/msg/JointTrajectory'[] trajectory
       result
       feedback
+    GripperCommandAct
+      goal
+        'control_msgs/msg/GripperCommand'[] command
+      result
+        float64 position
+        float64 effort
+        bool stalled
+        bool reached_goal
+      feedback
+        float64 position
+        float64 effort
+        bool stalled
+        bool reached_goal
     PointHead
       goal
         'geometry_msgs/msg/PointStamped'[] target
@@ -165,17 +188,4 @@ control_msgs:
         float64 position
         float64 velocity
         float64 error
-    GripperCommand
-      goal
-        'control_msgs/msg/GripperCommand'[] command
-      result
-        float64 position
-        float64 effort
-        bool stalled
-        bool reached_goal
-      feedback
-        float64 position
-        float64 effort
-        bool stalled
-        bool reached_goal 
     
