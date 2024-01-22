@@ -6,13 +6,15 @@ my_awesome_system:
   nodes:
     node1:
       from: "my_awesome_pkg.awesome_node" #From .ros2 file
+      namespace: "/awesome_ns1"
       interfaces:
         - my_publisher: pub-> "awesome::awesome_pub" # From .ros2 file
       parameters:
         - my_param: "awesome::awesome_param"
-         value: "Label"
+          value: "NewValue"
     node2:
       from: "my_awesome_pkg.awesome_node" #From .ros2 file
+      namespace: "/awesome_ns2"
       interfaces:
         - my_subscriber: sub-> "awesome::awesome_sub"
   connections:
