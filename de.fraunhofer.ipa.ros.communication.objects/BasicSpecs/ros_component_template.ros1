@@ -15,7 +15,7 @@ my_awesome_pkg:
         awesome_server:
           type: "std_srvs/srv/Empty"
       actionclients:
-        awesome_action:
+        awesome_action_client:
           type: "control_msgs/action/JointTrajectory"
       actionservers:
         awesome_action:

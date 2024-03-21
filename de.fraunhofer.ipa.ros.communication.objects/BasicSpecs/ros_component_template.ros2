@@ -39,7 +39,7 @@ my_awesome_pkg:
             profile: services_qos
             reliability: best_effort 
       actionclients:
-        awesome_action:
+        awesome_action_client:
           type: "control_msgs/action/JointTrajectory"
           qos: 
             depth: 10
@@ -57,7 +57,7 @@ my_awesome_pkg:
             profile: default_qos
             reliability: best_effort 
       parameters:
-        awesome_param:
+        awesome_string_param:
           type: String
           default: "Hello"
           qos: 
@@ -65,4 +65,47 @@ my_awesome_pkg:
             durability: volatile
             history: keep_all
             profile: parameter_qos
-            reliability: best_effort 
+            reliability: best_effort
+        awesome_bool_param:
+          type: Boolean
+          default: true
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
+        awesome_array_param:
+          type: Array[String]
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
+        awesome_double_param:
+          type: Double
+          default: 1.1
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
+        awesome_integer_param:
+          type: Integer
+          default: 1
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
+        awesome_struct_param:
+          type: Struct [first Integer, second Boolean]
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
