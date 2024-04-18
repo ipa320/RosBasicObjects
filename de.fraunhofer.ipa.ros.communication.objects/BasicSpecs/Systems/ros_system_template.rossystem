@@ -1,0 +1,41 @@
+my_awesome_system:
+  processes:
+    process1:
+      nodes: [ node1 , node2 ]
+      threads: 2
+  subSystems: 
+    my_subsystem      
+  nodes:
+    node1:
+      from: "my_awesome_pkg.awesome_node" #From .ros2 file
+      namespace: "/awesome_ns1"
+      interfaces:
+        - my_publisher: pub-> "awesome::awesome_pub" # From .ros2 file
+        - my_server: ss-> "awesome::awesome_server"
+        - my_act_server: as-> "awesome::awesome_action"
+    node2:
+      from: "my_awesome_pkg.awesome_node" #From .ros2 file
+      namespace: "/awesome_ns2"
+      interfaces:
+        - my_subscriber: sub-> "awesome::awesome_sub"
+        - my_client: sc-> "awesome::awesome_client"
+        - my_act_client: ac-> "awesome::awesome_action_client"
+      parameters:
+        - array_example: "awesome::awesome_array_param"
+          value: ["hello", "hallo"]
+        - bool_example: "awesome::awesome_bool_param"
+          value: true
+        - double_example: "awesome::awesome_double_param"
+          value: 1.2
+        - integer_example : "awesome::awesome_integer_param"
+          value: 2
+        - string_param : "awesome::awesome_string_param"
+          value: "hallo"
+        - struct_param: "awesome::awesome_struct_param"
+          value: [
+            first: 2
+            second: true]
+  connections:
+    -[my_publisher, my_subscriber] # From line 10 and 17
+    -[my_act_server,my_act_client]
+    -[my_server, my_client]
