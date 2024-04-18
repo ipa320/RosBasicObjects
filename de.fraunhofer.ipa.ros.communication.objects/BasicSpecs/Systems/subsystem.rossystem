@@ -1,0 +1,12 @@
+my_subsystem:
+  nodes:
+    node1a:
+      from: "my_awesome_pkg.awesome_node"
+      interfaces:
+        - other_publisher: pub-> "awesome::awesome_pub"
+    node2a:
+      from: "my_awesome_pkg.awesome_node"
+      interfaces:
+        - other_subscriber: sub-> "awesome::awesome_sub"
+  connections:
+   - [other_publisher, other_subscriber]

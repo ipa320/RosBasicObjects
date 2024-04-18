@@ -103,6 +103,9 @@ my_awesome_pkg:
             reliability: best_effort
         awesome_struct_param:
           type: Struct [first Integer, second Boolean]
+          value: [ 
+            first: 1
+            second: true]
           qos: 
             depth: 10
             durability: volatile
