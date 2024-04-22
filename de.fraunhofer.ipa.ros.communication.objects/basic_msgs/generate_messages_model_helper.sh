@@ -34,7 +34,7 @@ do
         cout_specs=$((cout_specs-1))
         if [[ "$i" == *"/msg"* ]]; then
           message=${i/$p\/msg\//}
-          message_show=$(ros2 interface show $i | grep -v '	' )
+          message_show=$(ros2 interface show $i | grep -v '	' | grep -v '^#' )
           message_show="$(echo $message_show | sed -e 's/\s=\s/=/g')"
           final_desc=$(parserToRosModel "$message_show")
           echo -n '     msg: '$message
@@ -43,7 +43,7 @@ do
         fi
         if [[ "$i" == *"/srv"* ]]; then
           service=${i/$p\/srv\//}
-          service_show=$(ros2 interface show $i | grep -v '	' )
+          service_show=$(ros2 interface show $i | grep -v '	' | grep -v '^#' )
           request="$(echo $service_show | sed 's/---.*//' | sed -e 's/\s=\s/=/g')"
           response="$(echo $service_show | sed -e 's#.*---\(\)#\1#'| sed -e 's/\s=\s/=/g')"
           final_request=$(parserToRosModel "$request")
