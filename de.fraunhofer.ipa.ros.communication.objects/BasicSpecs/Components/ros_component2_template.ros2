@@ -1,0 +1,114 @@
+my_awesome2_pkg:
+  artifacts:
+    awesome2:
+      node: awesome2_node
+      publishers:
+        awesome2_pub:
+          type: "std_msgs/msg/Bool"
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: default_qos
+            reliability: best_effort 
+      subscribers:
+        awesome2_sub:
+          type: "std_msgs/msg/Bool"
+          qos: 
+            depth: 10
+            durability: transient_local
+            history: keep_last
+            profile: sensor_qos
+            reliability: reliable 
+      serviceclients:
+        awesome2_client:
+          type: "std_srvs/srv/Empty"
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: services_qos
+            reliability: best_effort 
+      serviceservers:
+        awesome2_server:
+          type: "std_srvs/srv/Empty"
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: services_qos
+            reliability: best_effort 
+      actionclients:
+        awesome2_action_client:
+          type: "control_msgs/action/JointTrajectory"
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: default_qos
+            reliability: best_effort 
+      actionservers:
+        awesome2_action:
+          type: "control_msgs/action/JointTrajectory"
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: default_qos
+            reliability: best_effort 
+      parameters:
+        awesome2_string_param:
+          type: String
+          default: "Hello"
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
+        awesome2_bool_param:
+          type: Boolean
+          default: true
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
+        awesome2_array_param:
+          type: Array[String]
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
+        awesome2_double_param:
+          type: Double
+          default: 1.1
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
+        awesome2_integer_param:
+          type: Integer
+          default: 1
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
+        awesome2_struct_param:
+          type: Struct [first Integer, second Boolean]
+          value: [ 
+            first: 1
+            second: true]
+          qos: 
+            depth: 10
+            durability: volatile
+            history: keep_all
+            profile: parameter_qos
+            reliability: best_effort
