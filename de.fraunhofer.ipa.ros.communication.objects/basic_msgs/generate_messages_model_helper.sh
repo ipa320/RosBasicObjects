@@ -6,7 +6,7 @@ function parserToRosModel(){
     for word in $1; do
         word="$(echo $word | sed -e 's/\[[^][]*\]/[]/g' )"
         if [[ $word == *"/"* ]]; then
-            ref="$(echo $word | tr / .)"
+            ref="${word//\//\/msg\/}"
             if [[ $ref = *"[]"* ]]; then
                 msg_desc+='"'${ref%"[]"}'"[]'
             else
@@ -21,70 +21,62 @@ function parserToRosModel(){
 
 for p in $package_list
 do
-    cout_pkg=$((cout_pkg-1))
     specs_fullname=$(ros2 interface package $p)
-    arr_specs=($specs_fullname)
-    cout_specs=${#arr_specs[@]}
+    arr_specs=()
+    arr_msgs=()
+    arr_srvs=()
 
     echo $p':'
-    echo '  specs:'
 
     for i in $specs_fullname
     do
-        cout_specs=$((cout_specs-1))
-        if [[ "$i" == *"/msg"* ]]; then
-          message=${i/$p\/msg\//}
-          message_show=$(ros2 interface show $i | grep -v '	' | grep -v '^#' )
-          message_show="$(echo $message_show | sed -e 's/\s=\s/=/g')"
-          final_desc=$(parserToRosModel "$message_show")
-          echo -n '     msg: '$message
-          echo $'\n''       message:'
-          echo '         '$final_desc
-        fi
-        if [[ "$i" == *"/srv"* ]]; then
-          service=${i/$p\/srv\//}
-          service_show=$(ros2 interface show $i | grep -v '	' | grep -v '^#' )
-          request="$(echo $service_show | sed 's/---.*//' | sed -e 's/\s=\s/=/g')"
-          response="$(echo $service_show | sed -e 's#.*---\(\)#\1#'| sed -e 's/\s=\s/=/g')"
-          final_request=$(parserToRosModel "$request")
-          final_response=$(parserToRosModel "$response")   
-          echo -n '     srv: '$service
-          echo $'\n''       request:'
-          if [ -n "$request" ];then
-            echo '         '$final_request
-          fi
-          echo $'\n''       response:'
-          if [ -n "$response" ];then
-            echo '         '$final_response
-          fi
-        fi
+      if [[ "$i" == *"/msg"* ]]; then
+        arr_msgs="$arr_msgs $i"
+      fi
+      if [[ "$i" == *"/srv"* ]]; then
+        arr_srvs="$arr_srvs $i"
+      fi
     done
-done
+    if [[ ${#arr_msgs[@]} > 0 ]]; then
+      echo "  msgs:"
+      for i in $arr_msgs
+      do
+        message=${i/$p\/msg\//}
+        #message_show="$(ros2 interface show $i)"
+        #message_show=$(ros2 interface show $i | grep -v '	' | grep -v '^#' )
+        #message_show=$(echo -e $message_show | sed -e 's/\s=\s/=/g')
+        #final_desc=$(parserToRosModel "$message_show")
+        echo '    '$message
+        echo '      message'
+        while read -r line
+        do
+          echo "       $(parserToRosModel "$line")"
+        done < <(ros2 interface show $i | grep -v '	' | sed -e 's/\s=\s/=/g')
+      done
+    fi
 
-#	for i in $MsgsArray
-#	do
-#		if [[ "$i" =~ "ActionGoal" ]];then
-#			ActionName=${i//'ActionGoal'/}
-#			if [[ "${MsgsArray[@]}" =~ "${ActionName}ActionResult" ]] && [[ "${MsgsArray[@]}" =~ "${ActionName}ActionFeedback" ]]; then
-#				arr_act+=$ActionName' '
-#			fi
-#		fi	
-#	done
-#	cout_act=${#arr_act[@]}
-#    for i in $arr_act
-#    do
-#        cout_act=$((cout_act-1))
-#	    echo -n '      ActionSpec '$i'{ goal { '$i'ActionGoal action_goal} result {'$i'ActionResult action_result} feedback {'$i'ActionFeedback action_feedback}}
-#'
-#        if (("$cout_act" >= "1"))
-#        then
-#            echo ','
-#        fi
-#    done
-#
-#    echo -n $'\n    }}'
-#    if (("$cout_pkg" >= "1"))
-#    then
-#        echo ','
-#    fi
-#done
+    if [[ ${#arr_srvs[@]} > 0 ]]; then
+      echo "  srvs:"
+      for i in $arr_srvs
+      do
+        service=${i/$p\/srv\//}
+        #service_show=$(ros2 interface show $i | grep -v '	' | grep -v '^#' )
+        #request="$(echo $service_show | sed 's/---.*//' | sed -e 's/\s=\s/=/g')"
+        #response="$(echo $service_show | sed -e 's#.*---\(\)#\1#'| sed -e 's/\s=\s/=/g')"
+        #final_request=$(parserToRosModel "$request")
+        #final_response=$(parserToRosModel "$response")   
+        echo '    '$service
+        echo '      request'
+        while read -r line
+        do
+          echo "        $(parserToRosModel "$line")"
+        done < <(ros2 interface show $i | grep -v '	' | grep -v '^#'| sed 's/---.*//' | sed -e 's/\s=\s/=/g')
+        echo '      response'
+        while read -r line
+        do
+          echo "        $(parserToRosModel "$line")"
+        done < <(ros2 interface show $i | grep -v '	' | grep -v '^#'| sed -e 's#.*---\(\)#\1#'| sed -e 's/\s=\s/=/g')
+      done
+    fi
+
+done
